@@ -41,6 +41,7 @@ export default function Data(){
  const pending=useRef(new Map<number,{resolve:(reply:Reply)=>void;reject:(error:Error)=>void}>());
  const draft:DataDraft={sql,newTable,definition,createOpen,tab,table:view?.table??'',record:rowOpen===null?undefined:record,newRecord:rowOpen===-1,rowKey:rowOpen!==null&&rowOpen>=0?view?.keys[rowOpen] as DataDraft['rowKey']:undefined,params,paramTypes,queryName,queryId,nullFields,browse};
  const draftRef=useRef(draft);draftRef.current=draft;
+ useEffect(()=>{if(!message)return;const timer=setTimeout(()=>setMessage(''),12000);return()=>clearTimeout(timer);},[message]);
  const fail=(error:unknown)=>setMessage(error instanceof Error?error.message:String(error));
  function start(){
   const next=new Worker(new URL('./data.worker.ts',import.meta.url),{type:'module'});worker.current=next;
